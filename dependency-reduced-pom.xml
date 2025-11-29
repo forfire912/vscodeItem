@@ -2,10 +2,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.softwarefactory</groupId>
-  <artifactId>ontology-dynamic-network</artifactId>
-  <name>Ontology Dynamic Network</name>
-  <version>1.0.0</version>
-  <description>基于动态本体映射与动力学决策网络的软件工厂实现</description>
+  <artifactId>ontology-factory</artifactId>
+  <name>Dynamic Ontology Software Factory</name>
+  <version>2.0.0</version>
+  <description>基于动态本体映射与动力学决策网络的软件工厂 v2.0 (多项目并发支持)</description>
   <build>
     <plugins>
       <plugin>
@@ -14,17 +14,6 @@
         <configuration>
           <source>17</source>
           <target>17</target>
-        </configuration>
-      </plugin>
-      <plugin>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>3.3.0</version>
-        <configuration>
-          <archive>
-            <manifest>
-              <mainClass>com.softwarefactory.ontology.Main</mainClass>
-            </manifest>
-          </archive>
         </configuration>
       </plugin>
       <plugin>
@@ -42,6 +31,16 @@
                   <mainClass>com.softwarefactory.ontology.Main</mainClass>
                 </transformer>
               </transformers>
+              <filters>
+                <filter>
+                  <artifact>*:*</artifact>
+                  <excludes>
+                    <exclude>META-INF/*.SF</exclude>
+                    <exclude>META-INF/*.DSA</exclude>
+                    <exclude>META-INF/*.RSA</exclude>
+                  </excludes>
+                </filter>
+              </filters>
             </configuration>
           </execution>
         </executions>
@@ -49,10 +48,12 @@
     </plugins>
   </build>
   <properties>
-    <maven.compiler.target>17</maven.compiler.target>
     <snakeyaml.version>2.0</snakeyaml.version>
     <maven.compiler.source>17</maven.compiler.source>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <jackson.version>2.15.2</jackson.version>
+    <maven.compiler.target>17</maven.compiler.target>
+    <slf4j.version>2.0.7</slf4j.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <logback.version>1.4.8</logback.version>
   </properties>
 </project>

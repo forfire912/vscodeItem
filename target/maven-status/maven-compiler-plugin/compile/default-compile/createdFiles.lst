@@ -1,0 +1,15 @@
+com/softwarefactory/ontology/WaterfallEngine.class
+com/softwarefactory/ontology/AgileEngine.class
+com/softwarefactory/ontology/model/OntologyObject.class
+com/softwarefactory/ontology/model/Action.class
+com/softwarefactory/ontology/ProjectManager.class
+com/softwarefactory/ontology/HybridEngine.class
+com/softwarefactory/ontology/SharedResource.class
+com/softwarefactory/ontology/ProcessModeEngine.class
+com/softwarefactory/ontology/ProjectContext.class
+com/softwarefactory/ontology/Main.class
+com/softwarefactory/ontology/ResourceScheduler.class
+com/softwarefactory/ontology/ProjectStatus.class
+com/softwarefactory/ontology/ProjectContext$1.class
+com/softwarefactory/ontology/WorkflowMode.class
+com/softwarefactory/ontology/Phase.class
