@@ -1,0 +1,20 @@
+.
+├── QUICKSTART.md
+├── README.md
+├── config
+│   ├── actions.yml
+│   ├── ontology.yml
+│   └── rules.yml
+├── demo.sh
+├── dependency-reduced-pom.xml
+├── pom.xml
+├── project_structure.txt
+├── run.sh
+└── src
+    └── main
+        ├── java
+        │   └── com
+        └── resources
+            └── logback.xml
+
+7 directories, 11 files

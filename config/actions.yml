@@ -1,0 +1,68 @@
+# 动作配置文件
+# 定义可在本体对象上执行的操作
+
+actions:
+  # 代码审查相关动作
+  - name: 启用强制审查
+    description: 对代码分支启用强制审查流程
+    target_object_type: code_branch
+    parameters:
+      review_level: string
+      
+  - name: 代码走查
+    description: 启动代码走查流程
+    target_object_type: code_change
+    parameters:
+      reviewer: string
+
+  - name: 静态分析
+    description: 运行静态代码分析
+    target_object_type: code_change
+    parameters:
+      tool: string
+
+  # 测试台相关动作
+  - name: 预约测试台
+    description: 预约指定的测试平台
+    target_object_type: test_platform
+    parameters:
+      platform: string
+      reserved_by: string
+
+  - name: 上电
+    description: 给测试设备上电
+    target_object_type: test_platform
+    parameters: {}
+
+  - name: 加载固件
+    description: 加载固件到测试平台
+    target_object_type: test_platform
+    parameters:
+      firmware_version: string
+
+  - name: 运行测试
+    description: 在测试台上运行测试
+    target_object_type: test_platform
+    parameters:
+      test_suite: string
+
+  # 通知动作
+  - name: 发送通知
+    description: 发送通知消息
+    target_object_type: "*"
+    parameters:
+      message: string
+      recipients: string
+
+  # 需求相关动作
+  - name: 审查需求
+    description: 启动需求审查流程
+    target_object_type: requirement
+    parameters:
+      reviewer: string
+
+  - name: 分配任务
+    description: 分配需求给开发团队
+    target_object_type: requirement
+    parameters:
+      assignee: string
