@@ -1,0 +1,271 @@
+# ============================================
+# 本体库 (Ontology Library)
+# 定义系统中所有可用的本体类型
+# ============================================
+
+ontologies:
+  # 需求相关本体
+  - id: requirement
+    name: 需求
+    category: requirement
+    attributes:
+      - name: req_id
+        type: string
+        required: true
+      - name: title
+        type: string
+        required: true
+      - name: description
+        type: string
+        required: false
+      - name: priority
+        type: enum
+        values: [high, medium, low]
+        required: true
+      - name: status
+        type: enum
+        values: [draft, approved, implemented, tested]
+        required: true
+      - name: source
+        type: string
+        required: false
+    
+  - id: user_story
+    name: 用户故事
+    category: requirement
+    attributes:
+      - name: story_id
+        type: string
+        required: true
+      - name: as_a
+        type: string
+        required: true
+      - name: i_want
+        type: string
+        required: true
+      - name: so_that
+        type: string
+        required: true
+      - name: acceptance_criteria
+        type: list
+        required: true
+      - name: story_points
+        type: number
+        required: false
+      - name: status
+        type: enum
+        values: [backlog, in_progress, done]
+        required: true
+
+  # 设计相关本体
+  - id: design_doc
+    name: 设计文档
+    category: design
+    attributes:
+      - name: doc_id
+        type: string
+        required: true
+      - name: title
+        type: string
+        required: true
+      - name: version
+        type: string
+        required: true
+      - name: author
+        type: string
+        required: true
+      - name: review_status
+        type: enum
+        values: [draft, in_review, approved, rejected]
+        required: true
+      - name: content
+        type: text
+        required: false
+
+  - id: architecture_component
+    name: 架构组件
+    category: design
+    attributes:
+      - name: component_id
+        type: string
+        required: true
+      - name: component_name
+        type: string
+        required: true
+      - name: type
+        type: enum
+        values: [frontend, backend, database, service, library]
+        required: true
+      - name: technology
+        type: string
+        required: false
+      - name: status
+        type: enum
+        values: [planned, in_development, completed]
+        required: true
+
+  # 开发相关本体
+  - id: code_module
+    name: 代码模块
+    category: development
+    attributes:
+      - name: module_id
+        type: string
+        required: true
+      - name: module_name
+        type: string
+        required: true
+      - name: language
+        type: string
+        required: true
+      - name: file_path
+        type: string
+        required: true
+      - name: lines_of_code
+        type: number
+        required: false
+      - name: status
+        type: enum
+        values: [coding, code_review, completed]
+        required: true
+
+  - id: commit
+    name: 代码提交
+    category: development
+    attributes:
+      - name: commit_id
+        type: string
+        required: true
+      - name: message
+        type: string
+        required: true
+      - name: author
+        type: string
+        required: true
+      - name: timestamp
+        type: datetime
+        required: true
+      - name: files_changed
+        type: number
+        required: false
+
+  # 测试相关本体
+  - id: test_case
+    name: 测试用例
+    category: testing
+    attributes:
+      - name: test_id
+        type: string
+        required: true
+      - name: test_name
+        type: string
+        required: true
+      - name: test_type
+        type: enum
+        values: [unit, integration, system, acceptance]
+        required: true
+      - name: status
+        type: enum
+        values: [not_run, passed, failed, blocked]
+        required: true
+      - name: priority
+        type: enum
+        values: [high, medium, low]
+        required: true
+
+  - id: bug
+    name: 缺陷
+    category: testing
+    attributes:
+      - name: bug_id
+        type: string
+        required: true
+      - name: title
+        type: string
+        required: true
+      - name: severity
+        type: enum
+        values: [critical, major, minor, trivial]
+        required: true
+      - name: status
+        type: enum
+        values: [open, in_progress, resolved, closed]
+        required: true
+      - name: found_in_phase
+        type: string
+        required: false
+      - name: assignee
+        type: string
+        required: false
+
+  # 部署相关本体
+  - id: deployment_package
+    name: 部署包
+    category: deployment
+    attributes:
+      - name: package_id
+        type: string
+        required: true
+      - name: version
+        type: string
+        required: true
+      - name: environment
+        type: enum
+        values: [dev, test, staging, production]
+        required: true
+      - name: status
+        type: enum
+        values: [prepared, deployed, verified, rollback]
+        required: true
+      - name: deploy_date
+        type: datetime
+        required: false
+
+  - id: release_note
+    name: 发布说明
+    category: deployment
+    attributes:
+      - name: release_id
+        type: string
+        required: true
+      - name: version
+        type: string
+        required: true
+      - name: release_date
+        type: date
+        required: true
+      - name: features
+        type: list
+        required: true
+      - name: bug_fixes
+        type: list
+        required: false
+      - name: known_issues
+        type: list
+        required: false
+
+  # 评审相关本体
+  - id: review_record
+    name: 评审记录
+    category: review
+    attributes:
+      - name: review_id
+        type: string
+        required: true
+      - name: review_type
+        type: enum
+        values: [code_review, design_review, test_review, release_review]
+        required: true
+      - name: reviewer
+        type: string
+        required: true
+      - name: result
+        type: enum
+        values: [approved, rejected, needs_revision]
+        required: true
+      - name: comments
+        type: text
+        required: false
+      - name: review_date
+        type: datetime
+        required: true

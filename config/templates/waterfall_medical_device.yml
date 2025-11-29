@@ -1,0 +1,147 @@
+# ============================================
+# 瀑布模式项目模板 - 医疗设备软件
+# Medical Device Software (FDA Regulated)
+# ============================================
+
+template_id: waterfall_medical_device
+template_name: 医疗设备软件(瀑布模式)
+workflow_mode: WATERFALL
+description: 适用于FDA监管的医疗设备软件开发,严格遵循瀑布流程
+industry: healthcare
+compliance: FDA_21CFR820
+
+# 从本体库选取的本体集
+ontologies:
+  - requirement        # 需求文档
+  - design_doc         # 设计文档
+  - architecture_component  # 架构组件
+  - code_module        # 代码模块
+  - test_case          # 测试用例
+  - bug                # 缺陷
+  - review_record      # 评审记录
+  - deployment_package # 部署包
+  - release_note       # 发布说明
+
+# 从活动库选取的活动集
+activities:
+  # 需求阶段 (严格的需求分析)
+  requirement_phase:
+    - gather_requirements
+    - analyze_requirements
+    - approve_requirements
+    
+  # 设计阶段 (强制设计评审)
+  design_phase:
+    - create_architecture_design
+    - create_detailed_design
+    - review_design
+    
+  # 开发阶段 (编码规范严格)
+  development_phase:
+    - implement_module
+    - write_unit_tests
+    - local_build
+    
+  # 代码评审阶段 (强制性评审)
+  code_review_phase:
+    - conduct_code_review
+    - fix_review_issues
+    - merge_code
+    
+  # 测试阶段 (全面测试)
+  testing_phase:
+    - execute_integration_test
+    - execute_system_test
+    - execute_acceptance_test
+    - fix_bug
+    - regression_test
+    
+  # 部署阶段 (严格发布流程)
+  deployment_phase:
+    - prepare_deployment_package
+    - deploy_to_staging
+    - deploy_to_production
+    - create_release_notes
+    - monitor_production
+
+# 从关系库选取的关系集
+relationships:
+  - depends_on         # 依赖关系
+  - implements         # 实现关系
+  - tests              # 测试关系
+  - traces_to          # 追溯关系
+  - found_by           # 缺陷发现关系
+  - fixes              # 修复关系
+  - contains           # 包含关系
+  - reviews            # 评审关系
+  - approved_by        # 审批关系
+
+# 阶段门禁配置
+phase_gates:
+  requirement_to_design:
+    required_reviews:
+      - type: requirement
+        status: approved
+    required_artifacts:
+      - requirement_specification
+      - risk_analysis
+      
+  design_to_development:
+    required_reviews:
+      - type: design_doc
+        status: approved
+    required_artifacts:
+      - architecture_design
+      - detailed_design
+      - design_review_record
+      
+  development_to_code_review:
+    required_artifacts:
+      - all_modules_implemented
+      - unit_tests_written
+      - build_successful
+      
+  code_review_to_testing:
+    required_reviews:
+      - type: code_module
+        status: approved
+    required_artifacts:
+      - code_review_passed
+      - static_analysis_clean
+      
+  testing_to_deployment:
+    required_artifacts:
+      - all_tests_passed
+      - no_critical_bugs
+      - user_acceptance_signed
+      
+  deployment_complete:
+    required_artifacts:
+      - production_deployed
+      - release_notes_published
+      - validation_complete
+
+# 质量标准
+quality_standards:
+  code_coverage_threshold: 90
+  critical_bugs_tolerance: 0
+  design_review_required: true
+  code_review_required: true
+  traceability_required: true
+  documentation_required: comprehensive
+
+# 合规要求
+compliance_requirements:
+  - requirement_traceability_matrix
+  - design_history_file
+  - validation_documentation
+  - risk_management_file
+  - change_control_records
+
+# 默认配置
+default_settings:
+  require_approval_for_phase_transition: true
+  allow_phase_rollback: false
+  allow_phase_skip: false
+  mandatory_documentation: true
+  audit_trail_enabled: true

@@ -1,0 +1,147 @@
+# ============================================
+# 瀑布模式项目模板 - 金融核心系统
+# Financial Core System (Banking)
+# ============================================
+
+template_id: waterfall_financial_core
+template_name: 金融核心系统(瀑布模式)
+workflow_mode: WATERFALL
+description: 适用于银行核心系统开发,强调审计追踪和合规性
+industry: finance
+compliance: SOX,PCI_DSS,Basel_III
+
+# 从本体库选取的本体集
+ontologies:
+  - requirement
+  - design_doc
+  - architecture_component
+  - code_module
+  - test_case
+  - bug
+  - review_record
+  - deployment_package
+  - release_note
+
+# 从活动库选取的活动集
+activities:
+  requirement_phase:
+    - gather_requirements
+    - analyze_requirements
+    - approve_requirements
+    
+  design_phase:
+    - create_architecture_design
+    - create_detailed_design
+    - review_design
+    
+  development_phase:
+    - implement_module
+    - write_unit_tests
+    - local_build
+    
+  code_review_phase:
+    - conduct_code_review
+    - fix_review_issues
+    - merge_code
+    
+  testing_phase:
+    - execute_integration_test
+    - execute_system_test
+    - execute_acceptance_test
+    - fix_bug
+    - regression_test
+    
+  deployment_phase:
+    - prepare_deployment_package
+    - deploy_to_staging
+    - deploy_to_production
+    - create_release_notes
+    - monitor_production
+
+# 从关系库选取的关系集
+relationships:
+  - depends_on
+  - implements
+  - tests
+  - traces_to
+  - found_by
+  - fixes
+  - contains
+  - reviews
+  - approved_by
+
+# 阶段门禁配置
+phase_gates:
+  requirement_to_design:
+    required_reviews:
+      - type: requirement
+        status: approved
+    required_artifacts:
+      - business_requirements
+      - security_requirements
+      - compliance_checklist
+      
+  design_to_development:
+    required_reviews:
+      - type: design_doc
+        status: approved
+    required_artifacts:
+      - system_architecture
+      - security_design
+      - data_model
+      
+  development_to_code_review:
+    required_artifacts:
+      - all_modules_coded
+      - unit_tests_passed
+      - security_scan_clean
+      
+  code_review_to_testing:
+    required_reviews:
+      - type: code_module
+        status: approved
+    required_artifacts:
+      - peer_review_passed
+      - security_review_passed
+      
+  testing_to_deployment:
+    required_artifacts:
+      - integration_tests_passed
+      - system_tests_passed
+      - security_tests_passed
+      - performance_tests_passed
+      - no_high_severity_bugs
+      
+  deployment_complete:
+    required_artifacts:
+      - production_validated
+      - rollback_plan_ready
+      - operations_handover_complete
+
+# 质量标准
+quality_standards:
+  code_coverage_threshold: 85
+  critical_bugs_tolerance: 0
+  high_bugs_tolerance: 0
+  design_review_required: true
+  code_review_required: true
+  security_review_required: true
+  performance_baseline_required: true
+
+# 合规要求
+compliance_requirements:
+  - audit_trail_complete
+  - segregation_of_duties
+  - access_control_matrix
+  - change_management_records
+  - disaster_recovery_plan
+  - business_continuity_plan
+
+# 默认配置
+default_settings:
+  require_approval_for_phase_transition: true
+  allow_phase_rollback: false
+  allow_phase_skip: false
+  mandatory_documentation: true
+  audit_trail_enabled: true
+  security_scanning_enabled: true

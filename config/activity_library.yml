@@ -1,0 +1,399 @@
+# ============================================
+# 活动库 (Activity Library)
+# 定义系统中所有可用的活动/动作
+# ============================================
+
+activities:
+  # 需求阶段活动
+  - id: gather_requirements
+    name: 收集需求
+    phase: REQUIREMENT
+    category: requirement_analysis
+    description: 从利益相关者收集和记录需求
+    inputs:
+      - stakeholder_feedback
+      - business_objectives
+    outputs:
+      - requirement
+      - user_story
+    duration_estimate: 5
+    required_roles:
+      - business_analyst
+      - product_owner
+
+  - id: analyze_requirements
+    name: 分析需求
+    phase: REQUIREMENT
+    category: requirement_analysis
+    description: 分析需求的可行性和优先级
+    inputs:
+      - requirement
+    outputs:
+      - requirement  # 更新status
+    duration_estimate: 3
+    required_roles:
+      - business_analyst
+      - technical_lead
+
+  - id: approve_requirements
+    name: 批准需求
+    phase: REQUIREMENT
+    category: requirement_management
+    description: 评审并批准需求文档
+    inputs:
+      - requirement
+    outputs:
+      - requirement  # status -> approved
+    duration_estimate: 2
+    required_roles:
+      - project_manager
+      - stakeholder
+
+  - id: create_backlog
+    name: 创建待办列表
+    phase: REQUIREMENT
+    category: agile_planning
+    description: 将用户故事加入产品待办列表
+    inputs:
+      - user_story
+    outputs:
+      - user_story  # status -> backlog
+    duration_estimate: 1
+    required_roles:
+      - product_owner
+
+  # 设计阶段活动
+  - id: create_architecture_design
+    name: 创建架构设计
+    phase: DESIGN
+    category: architecture_design
+    description: 设计系统整体架构
+    inputs:
+      - requirement
+    outputs:
+      - design_doc
+      - architecture_component
+    duration_estimate: 8
+    required_roles:
+      - architect
+      - technical_lead
+
+  - id: create_detailed_design
+    name: 创建详细设计
+    phase: DESIGN
+    category: detailed_design
+    description: 设计模块详细实现方案
+    inputs:
+      - architecture_component
+    outputs:
+      - design_doc
+    duration_estimate: 5
+    required_roles:
+      - senior_developer
+      - architect
+
+  - id: review_design
+    name: 评审设计
+    phase: DESIGN
+    category: quality_assurance
+    description: 评审设计文档和架构
+    inputs:
+      - design_doc
+    outputs:
+      - review_record
+      - design_doc  # status -> approved/rejected
+    duration_estimate: 3
+    required_roles:
+      - architect
+      - technical_lead
+      - qa_lead
+
+  # 开发阶段活动
+  - id: implement_module
+    name: 实现模块
+    phase: DEVELOPMENT
+    category: coding
+    description: 编写代码实现功能模块
+    inputs:
+      - design_doc
+      - user_story
+    outputs:
+      - code_module
+      - commit
+    duration_estimate: 10
+    required_roles:
+      - developer
+
+  - id: write_unit_tests
+    name: 编写单元测试
+    phase: DEVELOPMENT
+    category: testing
+    description: 为代码模块编写单元测试
+    inputs:
+      - code_module
+    outputs:
+      - test_case
+    duration_estimate: 3
+    required_roles:
+      - developer
+
+  - id: local_build
+    name: 本地构建
+    phase: DEVELOPMENT
+    category: build
+    description: 在本地环境构建和验证代码
+    inputs:
+      - code_module
+    outputs:
+      - commit
+    duration_estimate: 1
+    required_roles:
+      - developer
+
+  # 代码评审阶段活动
+  - id: conduct_code_review
+    name: 执行代码评审
+    phase: CODE_REVIEW
+    category: quality_assurance
+    description: 评审代码质量和规范
+    inputs:
+      - code_module
+      - commit
+    outputs:
+      - review_record
+    duration_estimate: 2
+    required_roles:
+      - senior_developer
+      - technical_lead
+
+  - id: fix_review_issues
+    name: 修复评审问题
+    phase: CODE_REVIEW
+    category: coding
+    description: 根据评审意见修复代码
+    inputs:
+      - review_record
+      - code_module
+    outputs:
+      - code_module
+      - commit
+    duration_estimate: 3
+    required_roles:
+      - developer
+
+  - id: merge_code
+    name: 合并代码
+    phase: CODE_REVIEW
+    category: version_control
+    description: 将代码合并到主分支
+    inputs:
+      - code_module
+      - review_record  # approved
+    outputs:
+      - commit
+    duration_estimate: 1
+    required_roles:
+      - developer
+      - technical_lead
+
+  # 测试阶段活动
+  - id: execute_integration_test
+    name: 执行集成测试
+    phase: TESTING
+    category: testing
+    description: 测试模块间的集成
+    inputs:
+      - code_module
+      - test_case
+    outputs:
+      - test_case  # status -> passed/failed
+      - bug
+    duration_estimate: 5
+    required_roles:
+      - qa_engineer
+
+  - id: execute_system_test
+    name: 执行系统测试
+    phase: TESTING
+    category: testing
+    description: 测试整个系统功能
+    inputs:
+      - requirement
+      - test_case
+    outputs:
+      - test_case
+      - bug
+    duration_estimate: 8
+    required_roles:
+      - qa_engineer
+      - test_lead
+
+  - id: execute_acceptance_test
+    name: 执行验收测试
+    phase: TESTING
+    category: testing
+    description: 用户验收测试
+    inputs:
+      - requirement
+      - user_story
+    outputs:
+      - test_case
+    duration_estimate: 5
+    required_roles:
+      - qa_engineer
+      - product_owner
+
+  - id: fix_bug
+    name: 修复缺陷
+    phase: TESTING
+    category: debugging
+    description: 修复测试发现的缺陷
+    inputs:
+      - bug
+    outputs:
+      - code_module
+      - commit
+      - bug  # status -> resolved
+    duration_estimate: 4
+    required_roles:
+      - developer
+
+  - id: regression_test
+    name: 回归测试
+    phase: TESTING
+    category: testing
+    description: 验证修复未引入新问题
+    inputs:
+      - bug  # resolved
+      - test_case
+    outputs:
+      - test_case
+    duration_estimate: 3
+    required_roles:
+      - qa_engineer
+
+  # 部署阶段活动
+  - id: prepare_deployment_package
+    name: 准备部署包
+    phase: DEPLOYMENT
+    category: release_management
+    description: 创建生产环境部署包
+    inputs:
+      - code_module
+      - test_case  # all passed
+    outputs:
+      - deployment_package
+    duration_estimate: 2
+    required_roles:
+      - devops_engineer
+
+  - id: deploy_to_staging
+    name: 部署到预生产环境
+    phase: DEPLOYMENT
+    category: deployment
+    description: 在预生产环境部署和验证
+    inputs:
+      - deployment_package
+    outputs:
+      - deployment_package  # status -> deployed
+    duration_estimate: 3
+    required_roles:
+      - devops_engineer
+
+  - id: deploy_to_production
+    name: 部署到生产环境
+    phase: DEPLOYMENT
+    category: deployment
+    description: 部署到生产环境
+    inputs:
+      - deployment_package  # verified in staging
+    outputs:
+      - deployment_package  # status -> deployed
+    duration_estimate: 4
+    required_roles:
+      - devops_engineer
+      - operations_manager
+
+  - id: create_release_notes
+    name: 创建发布说明
+    phase: DEPLOYMENT
+    category: documentation
+    description: 编写发布说明文档
+    inputs:
+      - requirement
+      - bug
+      - deployment_package
+    outputs:
+      - release_note
+    duration_estimate: 2
+    required_roles:
+      - technical_writer
+      - product_owner
+
+  - id: monitor_production
+    name: 生产监控
+    phase: DEPLOYMENT
+    category: operations
+    description: 监控生产环境运行状态
+    inputs:
+      - deployment_package
+    outputs:
+      - bug  # if issues found
+    duration_estimate: 5
+    required_roles:
+      - devops_engineer
+      - support_engineer
+
+  # 敏捷特有活动
+  - id: sprint_planning
+    name: Sprint规划
+    phase: REQUIREMENT
+    category: agile_planning
+    description: 规划Sprint待办事项
+    inputs:
+      - user_story
+    outputs:
+      - user_story  # status -> in_progress
+    duration_estimate: 2
+    required_roles:
+      - scrum_master
+      - development_team
+
+  - id: daily_standup
+    name: 每日站会
+    phase: DEVELOPMENT
+    category: agile_ceremony
+    description: 每日同步进度和问题
+    inputs: []
+    outputs: []
+    duration_estimate: 0.25
+    required_roles:
+      - scrum_master
+      - development_team
+
+  - id: sprint_review
+    name: Sprint评审
+    phase: TESTING
+    category: agile_ceremony
+    description: 展示Sprint成果
+    inputs:
+      - user_story  # done
+    outputs:
+      - review_record
+    duration_estimate: 2
+    required_roles:
+      - scrum_master
+      - product_owner
+      - stakeholder
+
+  - id: sprint_retrospective
+    name: Sprint回顾
+    phase: TESTING
+    category: agile_ceremony
+    description: 回顾改进过程
+    inputs: []
+    outputs: []
+    duration_estimate: 1.5
+    required_roles:
+      - scrum_master
+      - development_team

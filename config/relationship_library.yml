@@ -1,0 +1,323 @@
+# ============================================
+# 关系库 (Relationship Library)
+# 定义系统中所有可用的关系类型
+# ============================================
+
+relationships:
+  # 依赖关系
+  - id: depends_on
+    name: 依赖于
+    source_types:
+      - requirement
+      - user_story
+      - design_doc
+      - code_module
+      - test_case
+    target_types:
+      - requirement
+      - user_story
+      - design_doc
+      - code_module
+      - test_case
+    cardinality: many_to_many
+    description: 源对象依赖于目标对象
+    validation_rules:
+      - no_circular_dependency
+      - same_project_only
+
+  # 实现关系
+  - id: implements
+    name: 实现
+    source_types:
+      - code_module
+      - design_doc
+    target_types:
+      - requirement
+      - user_story
+      - design_doc
+    cardinality: many_to_many
+    description: 源对象实现目标对象的功能
+    validation_rules:
+      - target_must_exist
+      - same_project_only
+
+  # 测试关系
+  - id: tests
+    name: 测试
+    source_types:
+      - test_case
+    target_types:
+      - requirement
+      - user_story
+      - code_module
+    cardinality: many_to_many
+    description: 测试用例测试目标对象
+    validation_rules:
+      - target_must_exist
+      - same_project_only
+
+  # 追踪关系
+  - id: traces_to
+    name: 追溯到
+    source_types:
+      - design_doc
+      - code_module
+      - test_case
+      - bug
+    target_types:
+      - requirement
+      - user_story
+    cardinality: many_to_many
+    description: 可追溯到源需求
+    validation_rules:
+      - target_must_exist
+      - same_project_only
+
+  # 发现关系
+  - id: found_by
+    name: 发现于
+    source_types:
+      - bug
+    target_types:
+      - test_case
+    cardinality: many_to_one
+    description: 缺陷由测试用例发现
+    validation_rules:
+      - target_must_exist
+      - same_project_only
+
+  # 修复关系
+  - id: fixes
+    name: 修复
+    source_types:
+      - commit
+      - code_module
+    target_types:
+      - bug
+    cardinality: many_to_many
+    description: 代码提交或模块修复缺陷
+    validation_rules:
+      - target_must_be_open
+      - same_project_only
+
+  # 包含关系
+  - id: contains
+    name: 包含
+    source_types:
+      - deployment_package
+      - architecture_component
+    target_types:
+      - code_module
+      - commit
+      - architecture_component
+    cardinality: one_to_many
+    description: 源对象包含目标对象
+    validation_rules:
+      - no_circular_containment
+      - same_project_only
+
+  # 评审关系
+  - id: reviews
+    name: 评审
+    source_types:
+      - review_record
+    target_types:
+      - requirement
+      - design_doc
+      - code_module
+      - test_case
+      - deployment_package
+    cardinality: many_to_one
+    description: 评审记录关联被评审对象
+    validation_rules:
+      - target_must_exist
+      - same_project_only
+
+  # 父子关系
+  - id: parent_of
+    name: 父节点
+    source_types:
+      - requirement
+      - user_story
+      - architecture_component
+    target_types:
+      - requirement
+      - user_story
+      - architecture_component
+    cardinality: one_to_many
+    description: 父子层级关系
+    validation_rules:
+      - no_circular_hierarchy
+      - same_type_only
+      - same_project_only
+
+  # 替代关系
+  - id: supersedes
+    name: 替代
+    source_types:
+      - requirement
+      - design_doc
+      - deployment_package
+    target_types:
+      - requirement
+      - design_doc
+      - deployment_package
+    cardinality: one_to_one
+    description: 新版本替代旧版本
+    validation_rules:
+      - same_type_only
+      - target_must_be_older
+      - same_project_only
+
+  # 阻塞关系
+  - id: blocks
+    name: 阻塞
+    source_types:
+      - bug
+      - requirement
+      - user_story
+    target_types:
+      - requirement
+      - user_story
+      - test_case
+      - deployment_package
+    cardinality: many_to_many
+    description: 源对象阻塞目标对象进展
+    validation_rules:
+      - no_circular_blocking
+      - same_project_only
+
+  # 关联关系
+  - id: relates_to
+    name: 关联
+    source_types:
+      - requirement
+      - user_story
+      - bug
+      - design_doc
+    target_types:
+      - requirement
+      - user_story
+      - bug
+      - design_doc
+    cardinality: many_to_many
+    description: 一般关联关系
+    validation_rules:
+      - same_project_only
+
+  # 部署关系
+  - id: deploys
+    name: 部署
+    source_types:
+      - deployment_package
+    target_types:
+      - code_module
+      - architecture_component
+    cardinality: one_to_many
+    description: 部署包部署特定模块
+    validation_rules:
+      - target_must_be_completed
+      - same_project_only
+
+  # 版本关系
+  - id: version_of
+    name: 版本
+    source_types:
+      - deployment_package
+      - release_note
+    target_types:
+      - deployment_package
+      - release_note
+    cardinality: many_to_one
+    description: 版本演进关系
+    validation_rules:
+      - same_type_only
+      - same_project_only
+
+  # 分配关系
+  - id: assigned_to
+    name: 分配给
+    source_types:
+      - requirement
+      - user_story
+      - bug
+      - test_case
+    target_types:
+      - developer
+      - qa_engineer
+      - business_analyst
+    cardinality: many_to_one
+    description: 工作项分配给人员
+    validation_rules:
+      - target_must_be_available
+
+  # 审批关系
+  - id: approved_by
+    name: 批准人
+    source_types:
+      - requirement
+      - design_doc
+      - deployment_package
+      - release_note
+    target_types:
+      - project_manager
+      - technical_lead
+      - stakeholder
+    cardinality: many_to_many
+    description: 对象获得审批
+    validation_rules:
+      - approver_must_have_authority
+
+# 关系验证规则定义
+validation_rules:
+  no_circular_dependency:
+    description: 不允许循环依赖
+    type: graph_cycle_check
+    
+  no_circular_containment:
+    description: 不允许循环包含
+    type: graph_cycle_check
+    
+  no_circular_hierarchy:
+    description: 不允许循环层级
+    type: graph_cycle_check
+    
+  no_circular_blocking:
+    description: 不允许循环阻塞
+    type: graph_cycle_check
+    
+  target_must_exist:
+    description: 目标对象必须存在
+    type: existence_check
+    
+  target_must_be_open:
+    description: 目标缺陷必须是打开状态
+    type: status_check
+    status_field: status
+    required_value: open
+    
+  target_must_be_completed:
+    description: 目标模块必须已完成
+    type: status_check
+    status_field: status
+    required_value: completed
+    
+  target_must_be_older:
+    description: 目标对象必须是旧版本
+    type: timestamp_check
+    
+  same_type_only:
+    description: 源和目标必须是相同类型
+    type: type_match_check
+    
+  same_project_only:
+    description: 必须在同一项目内
+    type: project_scope_check
+    
+  target_must_be_available:
+    description: 目标人员必须可用
+    type: availability_check
+    
+  approver_must_have_authority:
+    description: 审批人必须有权限
+    type: authority_check

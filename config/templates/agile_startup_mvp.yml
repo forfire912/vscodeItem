@@ -1,0 +1,91 @@
+# ============================================
+# 敏捷模式项目模板 - 创业公司MVP
+# Startup MVP (Lean/Kanban)
+# ============================================
+
+template_id: agile_startup_mvp
+template_name: 创业公司MVP(敏捷模式)
+workflow_mode: AGILE
+description: 适用于创业公司快速验证产品想法,极简流程
+industry: startup
+methodology: lean_kanban
+
+# 从本体库选取的本体集
+ontologies:
+  - user_story         # 用户故事
+  - code_module        # 代码模块
+  - commit             # 代码提交
+  - test_case          # 测试用例
+  - bug                # 缺陷
+  - deployment_package # 部署包
+
+# 从活动库选取的活动集
+activities:
+  # 极简规划
+  planning_activities:
+    - create_backlog
+    
+  # 快速开发
+  development_activities:
+    - implement_module
+    - write_unit_tests
+    - local_build
+    - merge_code
+    
+  # 基础测试
+  testing_activities:
+    - execute_integration_test
+    - fix_bug
+    
+  # 快速部署
+  deployment_activities:
+    - prepare_deployment_package
+    - deploy_to_production
+
+# 从关系库选取的关系集
+relationships:
+  - implements
+  - tests
+  - found_by
+  - fixes
+  - blocks
+
+# Kanban配置
+kanban_config:
+  wip_limits:
+    backlog: unlimited
+    in_progress: 3
+    testing: 2
+    done: unlimited
+  cycle_time_target_days: 3
+
+# 阶段灵活性配置
+phase_flexibility:
+  allow_phase_jump: true
+  allow_phase_rollback: true
+  continuous_deployment: true
+  minimum_viable_process: true
+  
+# Definition of Done (极简)
+definition_of_done:
+  - code_implemented
+  - basic_tests_passed
+  - deployed_to_production
+
+# 质量标准(宽松)
+quality_standards:
+  code_coverage_threshold: 50
+  critical_bugs_tolerance: 0
+  code_review_required: false
+  automated_testing_required: false
+  ci_cd_required: true
+
+# 默认配置
+default_settings:
+  require_approval_for_phase_transition: false
+  allow_phase_rollback: true
+  allow_phase_skip: true
+  mandatory_documentation: false
+  audit_trail_enabled: false
+  fast_iteration_mode: true
+  move_fast_break_things: true
